@@ -1,5 +1,7 @@
 const Course = require("../Model/courses");
+const Courses = require("../Model/questions");
 const validator = require("../utils/courseValidator");
+const HttpStatus = require("../utils/HttpStatus");
 const httpStatus = require("../utils/HttpStatus");
 
 const getCourses = (req, res) => {
@@ -13,25 +15,23 @@ const addCourse = (req, res) => {
 
   crs.addCourse()
     .then((m) => res.status(201).send(m))
-    .catch(e => {
+    .catch((e) => {
       res.status(401).send(e);
       console.log(e);
-    })
+    });
 };
 
 const courseParam = async (req, res, next, val) => {
-  try {
-    const courses = await Course.courses();
-    const idx = courses.find((obj) => obj.name === val);
-    if (idx == -1) {
-      return res.status(404).send("Course Not found");
-    } else {
-      req.course = val;
-      next();
-    }
-  } catch (err) {
-    res.status(401).send(err);
-  }
+  Course.courseExist(val)
+    .then((v) => {
+      if (v) {
+        req.course = val;
+        next();
+      } else res.status(httpStatus.NOT_FOUND).send("Course Not Found");
+    })
+    .catch((err) => {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).send("Server Error");
+    });
 };
 
 module.exports = {

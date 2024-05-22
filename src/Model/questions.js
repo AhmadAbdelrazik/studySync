@@ -1,5 +1,6 @@
 const fs = require("fs/promises");
 const path = require("path");
+
 const coursesPath = path.join(
   path.dirname(require.main.filename),
   "Data",
@@ -10,6 +11,29 @@ const questionsPath = path.join(
   "Data",
   "Questions"
 );
+
+
+class Question {
+  constructor({question, choices, explaination}) {
+    this.question = question;
+    this.choices = choices;
+    this.explaination = explaination;
+  }
+
+  async addQuestion() {
+    return new Promise(async (resolve, reject) => {
+      try {
+        // 1) load the questions from the database.
+        const questionPath = path.join(path.dirname(require.main.filename),
+      "Data", "Questions", ``)
+        const data = await fs.readFile()
+      } catch (err) {
+        reject (err);
+      }
+    })
+  }
+}
+
 module.exports = class Courses {
   constructor(nm) {
     this.name = nm;
@@ -55,25 +79,5 @@ module.exports = class Courses {
         reject(err);
       }
     });
-  }
-
-  static courseExist(name) {
-        return new Promise(async (resolve, reject) => {
-          try {
-            const data = await fs.readFile(coursesPath);
-            const courses = JSON.parse(data);
-            
-            const course = courses.find(crs => crs.urlName == name);
-            
-            if (course)
-              resolve(true);
-            else 
-              resolve(false);
-
-          } catch (err) {
-            reject(err);
-          }
-
-        })
   }
 };
