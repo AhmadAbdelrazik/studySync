@@ -1,53 +1,58 @@
-const fs = require('fs');
+const fs = require('fs/promises');
 const path = require('path');
-const coursesPath = path.join(path.dirname(require.main.filename), "data", "courses.json");
-
+const coursesPath = path.join(path.dirname(require.main.filename), "Data", "courses.json");
+const questionsPath = path.join(path.dirname(require.main.filename), "Data", "Questions");
 module.exports = class Courses{
   constructor(nm) {
     this.name = nm;
   }
 
-  addCourse(cb) {
-    fs.readFile(coursesPath, (err, data) => {
-      if (!err) {
-        // 1) read the courses
-        let courses = [];
-        courses = JSON.parse(data);
+  async addCourse() {
+    return new Promise (async (resolve, reject) => {
+      try {
+        // 1) load the courses from database.
+        const data = await fs.readFile(coursesPath);
+        const courses = JSON.parse(data);
         
-        // 2) check if course is there.
-
-        let found = courses.find(crs => crs.name == this.name);
-        if (found) {
-          cb(false, "Course Already exist");
-        } else {
-          this.id = courses.length + 1;
-          courses.push(this);
-          fs.writeFile(coursesPath, JSON.stringify(courses), (err) => {
-            if (err) {
-              console.log(err);
-              cb(false, "Error while writing to file");
-            }
-          })
-          cb(true);
-        }
+        // Parse The Name Format
+        let courseName = req.body.name.split(" ");
+        courseName = courseName.map(w => w.toLowerCase());
+        courseName = courseName.join("_");
+    
+        // 2) Check If Course is there.
+        const course = courses.find(crs => crs.name == courseName);
+    
+        if (course)
+          reject("Course Already Exists");
+    
+        // 3) Create the Questions File.
+        await fs.writeFile(path.join(questionsPath, `${courseName}.json`));
+        
+        // 4) Add to the database.
+        courses.push(this);
+        await fs.writeFile(coursesPath, JSON.stringify(courses));
+        
+        resolve("Course Added Successfully");
+      } catch (err) {
+        reject(err);
       }
-      else {
-        console.log(err);
-        cb(false, "error while opening File");
+    })
+
+
+    
+
+  }
+
+  static courses() {
+    return new Promise (async (resolve, reject) => {
+      try {
+        const data = await fs.readFile(coursesPath);
+        const courses = JSON.parse(data);
+        resolve(courses);
+      } catch (err) {
+        reject (err);
       }
     })
   }
 
-  static courses(cb) {
-    fs.readFile(coursesPath, (err, data) => {
-      if (!err) {
-        let courses = [];
-        courses = JSON.parse(data);
-        cb(courses);
-      } else {
-        console.log(err);
-        cb([]);
-      }
-    })
-  }
 }

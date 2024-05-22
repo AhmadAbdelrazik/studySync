@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
-const coursesRoute = require('./Routes/courses');
 const port = process.env.PORT || 3000;
 
+const coursesRoute = require('./Routes/courses');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));

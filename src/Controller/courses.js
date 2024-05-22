@@ -1,30 +1,38 @@
-const Course = require('../Model/courses');
-const validator = require('../utils/courseValidator');
+const Course = require("../Model/courses");
+const validator = require("../utils/courseValidator");
 
-const getCourses = (req, res) => {  
-  Course.courses((coursesData) => {
-    res.json(coursesData);
-  })
-}
+const getCourses = (req, res) => {
+  Course.courses()
+    .then((courses) => res.status(200).send(courses))
+    .catch((e) => res.status(400).send(e));
+};
 
 const addCourse = (req, res) => {
-  const valid = validator(req.body)
+  let crs = new Course(req.body.name);
 
-  if (valid) {
-    let crs = new Course(req.body.name);
-    crs.addCourse((ok, message) => {
-      if (ok) {
-        res.send("course has been added successfully");
-      } else {
-        res.status(402).send(message);
-      }
-    });
-  } else {
-    res.status(402).send("Invalid Format");
+  crs.addCourse()
+    .then((m) => res.status(200).send(m))
+    .catch((e) => res.status(401).send(e));
+};
+
+const courseParam = async (req, res, next, val) => {
+  try {
+    const courses = await Course.courses();
+    const idx = courses.find(obj => obj.name === val);
+    if (idx == -1) {
+      return res.status(404).send("Course Not found");
+    } else {
+      req.course = val;
+      next();
+    }
+  } catch (err) {
+    res.status(401).send(err);
   }
-}
+
+};
 
 module.exports = {
   getCourses,
-  addCourse
-}
+  addCourse,
+  courseParam,
+};
