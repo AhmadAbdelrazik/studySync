@@ -1,5 +1,6 @@
 const validator = require('../utils/courseValidator');
 
+  
 
 module.exports = (req, res, next) => {
   const valid = validator(req.body)

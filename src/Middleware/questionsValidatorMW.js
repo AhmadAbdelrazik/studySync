@@ -1,7 +1,11 @@
 const validator = require('../utils/questionsValidator');
+const nQvalidator = require('../utils/nQuestionsValidator');
 const statusCode = require('../utils/HttpStatus');
 
-module.exports = (req, res, next) => {
+
+
+
+const question = (req, res, next) => {
   const valid = validator(req.body);
 
   if (!valid)
@@ -20,4 +24,18 @@ module.exports = (req, res, next) => {
     
     next();
   }
+}
+
+const nQuestions = (req, res, next) => {
+  const valid = nQvalidator(req.body);
+
+  if (!valid)
+    return res.status(statusCode.BAD_REQUEST).send(`Invalid Format ...`);
+  
+  next();
+}
+
+module.exports = {
+  question,
+  nQuestions
 }
