@@ -1,21 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../Controller/courses')
-const validator = require('../Middleware/coursesValidatorMW');
+const controller = require('../Controller/questions')
+const validator = require('../Middleware/questionsValidatorMW');
 
 // Get n questions
-router.get('/')
-
-// Get Specific Question
-router.get('/')
+router.get('/', validator.nQuestions);
 
 // Get Random Question 
-router.get('/')
+router.get('/random')
 
 // Change a Question
-router.put('/');
+router.put('/', validator.question);
 
 // Add a Question
-router.post('/');
+router.post('/', validator.question, controller.addQuestion);
 
 module.exports = router;

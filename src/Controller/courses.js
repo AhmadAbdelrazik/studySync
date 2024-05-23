@@ -1,7 +1,4 @@
 const Course = require("../Model/courses");
-const Courses = require("../Model/questions");
-const validator = require("../utils/courseValidator");
-const HttpStatus = require("../utils/HttpStatus");
 const httpStatus = require("../utils/HttpStatus");
 
 const getCourses = (req, res) => {
@@ -22,6 +19,7 @@ const addCourse = (req, res) => {
 };
 
 const courseParam = async (req, res, next, val) => {
+  console.log(val);
   Course.courseExist(val)
     .then((v) => {
       if (v) {
