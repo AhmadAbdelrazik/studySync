@@ -5,7 +5,9 @@ const courseSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true
+    trim: true,
+    maxLength: 30,
+    minLength: 3
   },
   urlName: {
     type: String,
@@ -13,7 +15,7 @@ const courseSchema = new mongoose.Schema({
     unique: true,
     trim: true
   }
-})
+});
 
 const Course = mongoose.model('Course', courseSchema);
 

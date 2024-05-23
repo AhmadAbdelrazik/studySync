@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../Controller/questions')
+const controller = require('../Controller/questionsDB')
 const validator = require('../Middleware/questionsValidatorMW');
 
 // Get n questions
-router.get('/', validator.nQuestions);
+router.get('/', controller.getQuestions);
 
 // Get Random Question 
 router.get('/random')

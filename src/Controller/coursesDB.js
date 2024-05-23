@@ -27,10 +27,9 @@ const addCourse = async (req, res) => {
 
 const courseParam = async (req, res, next, val) => {
   try{
-    const course = await Course.find({name: val});
+    const course = await Course.findOne({urlName: val});
     if (course) {
       req.course = course;
-      console.log(course);
       next();
     } else  res.status(HttpStatus.NOT_FOUND).send("Course Not Found");
   } catch (err) {
