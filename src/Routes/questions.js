@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('../Controller/questionsDB')
+const controller = require('../Controller/questions')
 const validator = require('../Middleware/questionsValidatorMW');
 const tryCatch = require('../utils/tryCatch');
 // Get n questions

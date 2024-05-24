@@ -12,8 +12,8 @@ router.param("course", controller.courseParam);
 
 router.get("/", tryCatch(controller.getCourses));
 router.post("/", validator, tryCatch(controller.addCourse));
-router.put("/:course", putValidator, controller.putCourse);
-router.delete("/", validator, controller.deleteCourse);
+router.put("/:course", putValidator, tryCatch(controller.putCourse));
+router.delete("/", validator, tryCatch(controller.deleteCourse));
 
 router.use("/:course/questions", questionsRoute);
 
