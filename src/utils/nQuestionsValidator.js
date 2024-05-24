@@ -7,7 +7,6 @@ const schema = {
   properties: {
     page: {type: "number"}
   },
-  required: ["page"],
   additionalProperties: false
 }
 

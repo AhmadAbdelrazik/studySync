@@ -3,12 +3,27 @@ const validator = require("../utils/courseValidator");
 const HttpStatus = require("../utils/HttpStatus");
 
 
-const getQuestions = (req, res) => {
+const getQuestions = async (req, res) => {
+  const pageSize = 10;
   // Load All Questions
-  
-  // Check if page is out of bound.
+  const start = (req.body.page - 1) * pageSize;
+  const end = (req.body.page * pageSize) - 1;
 
-  // Get the questions belonging to the specified page
+  const questions = await Question.find({course: req.course.name});
+
+  if (!questions.length) {
+    res.status(HttpStatus.NOT_FOUND).send("No Questions yet");
+    return;
+  }
+
+  const pages = Math.ceil(questions.length / pageSize).toFixed();
+
+  // Check if page is out of bound.
+  if (questions.length < start) {
+    res.status(HttpStatus.BAD_REQUEST).send(`There is only ${pages} pages`);
+  } else {
+    res.json(questions.slice(start, end));
+  }
 }
 
 const addQuestion = (req, res) => {

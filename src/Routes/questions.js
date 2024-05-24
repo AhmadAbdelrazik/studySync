@@ -2,17 +2,18 @@ const express = require('express');
 const router = express.Router();
 const controller = require('../Controller/questionsDB')
 const validator = require('../Middleware/questionsValidatorMW');
-
+const tryCatch = require('../utils/tryCatch');
 // Get n questions
-router.get('/', controller.getQuestions);
+router.get('/', tryCatch(controller.getQuestions));
 
 // Get Random Question 
-router.get('/random')
-
+router.get('/random', tryCatch(controller.getRandomQuestion))
 // Change a Question
-router.put('/', validator.question);
+router.put('/', validator.putQuestion, tryCatch(controller.putQuestion));
 
 // Add a Question
-router.post('/', validator.question, controller.addQuestion);
+router.post('/', validator.question, tryCatch(controller.addQuestion));
+
+router.delete('/', validator.question, tryCatch(controller.deleteQuestion));
 
 module.exports = router;
