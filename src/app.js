@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const errorHandler = require('./Middleware/errorHandler');
 const mongoose = require('mongoose');
 
 const connectDB = async (db) => { try {
@@ -19,6 +20,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 app.use('/courses', coursesRoute);
+
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Started listening at port ${port} ...!!`);
