@@ -15,9 +15,15 @@ const connectDB = async (db) => { try {
 connectDB(`studySync`)
 
 const coursesRoute = require('./Routes/courses');
+const loginController = require('./Controller/login');
+const signupController = require('./Controller/signup');
+const userValidator = require('./Middleware/userValidatorMW');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+app.use('/login', userValidator.loginValidator, loginController);
+app.use('/signup', userValidator.signUpValidator, signupController);
 
 app.use('/courses', coursesRoute);
 

@@ -1,5 +1,5 @@
 const Question = require("../Model/questionsDB");
-const validator = require("../utils/courseValidator");
+const validator = require("../utils/validators/courseValidator");
 const HttpStatus = require("../utils/HttpStatus");
 const httpStatus = require("../utils/HttpStatus");
 

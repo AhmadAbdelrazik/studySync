@@ -1,4 +1,4 @@
-const validator = require('../utils/coursePutValidator');
+const validator = require('../utils/validators/coursePutValidator');
 
   
 

@@ -30,9 +30,8 @@ const schema = new mongoose.Schema({
   }
 });
 
-const User = new mongoose.model('user', schema);
 
-User.methods.generateJWT = function () {
+schema.methods.generateJWT = function () {
   const token = jwt.sign(
     {
       _id: User._id,
@@ -44,7 +43,7 @@ User.methods.generateJWT = function () {
   return token;
 };
 
-User.methods.generateExpJWT = function () {
+schema.methods.generateRefreshJWT = function () {
   const token = jwt.sign(
     {
       _id: User._id,
@@ -55,3 +54,8 @@ User.methods.generateExpJWT = function () {
   );
   return token;
 };
+
+const User = new mongoose.model('user', schema);
+
+module.exports = User;
+

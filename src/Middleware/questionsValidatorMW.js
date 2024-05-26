@@ -1,6 +1,6 @@
-const validator = require('../utils/questionsValidator');
-const putValidator = require('../utils/questionsPutValidator');
-const nQvalidator = require('../utils/nQuestionsValidator');
+const validator = require('../utils/validators/questionsValidator');
+const putValidator = require('../utils/validators/questionsPutValidator');
+const nQvalidator = require('../utils/validators/nQuestionsValidator');
 const statusCode = require('../utils/HttpStatus');
 
 
