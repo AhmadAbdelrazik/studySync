@@ -20,7 +20,7 @@ const schema = new mongoose.Schema({
   password: {
     type: String,
     minLength: 8,
-    maxLength: 50
+    maxLength: 100
   },
   isAdmin: {
     type: Boolean,
@@ -31,7 +31,7 @@ const schema = new mongoose.Schema({
 });
 
 
-schema.methods.generateJWT = function () {
+schema.methods.generateJWT = function generateJWT() {
   const token = jwt.sign(
     {
       _id: User._id,
@@ -43,7 +43,7 @@ schema.methods.generateJWT = function () {
   return token;
 };
 
-schema.methods.generateRefreshJWT = function () {
+schema.methods.generateRefreshJWT = function generateRefreshJWT() {
   const token = jwt.sign(
     {
       _id: User._id,
@@ -55,7 +55,7 @@ schema.methods.generateRefreshJWT = function () {
   return token;
 };
 
-const User = new mongoose.model('user', schema);
+const User = mongoose.model('user', schema);
 
 module.exports = User;
 

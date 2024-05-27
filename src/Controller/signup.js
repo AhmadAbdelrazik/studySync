@@ -7,10 +7,8 @@ module.exports = async function (req, res) {
   const user = await User.findOne({
     email: req.body.email
   })
-
-  if (!user) {
-    res.status(httpStatus.FORBIDDEN).send("Email already used");
-  }
+  if (user) 
+    return res.status(httpStatus.FORBIDDEN).send("Email already used");
 
   const hash = await bcrypt.hash(`${req.body.email}+${req.body.password}`, 10);
 
@@ -22,11 +20,10 @@ module.exports = async function (req, res) {
   });
 
   
-  const accessJWT = user.generateJWT;
-  const refreshJWT = user.generateRefreshJWT;
+  const accessJWT = await newUser.generateJWT();
+  const refreshJWT = await newUser.generateRefreshJWT();
   
   newUser.refreshToken = refreshJWT;
-  
   await newUser.save();
   
   const response = {

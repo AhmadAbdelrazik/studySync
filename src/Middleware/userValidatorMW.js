@@ -17,7 +17,7 @@ const loginValidator = function (req, res, next) {
   const valid = loginValid(req.body);
 
   if (!valid) 
-    return res.status(httpStatus.BAD_REQUEST).send('Invalid Sign up Format');
+    return res.status(httpStatus.BAD_REQUEST).send('Invalid login Format');
   else 
     next();
 }
