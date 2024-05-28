@@ -22,8 +22,8 @@ const userValidator = require('./Middleware/userValidatorMW');
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-app.use('/login', userValidator.loginValidator, loginController);
-app.use('/signup', userValidator.signUpValidator, signupController);
+app.post('/login', userValidator.loginValidator, loginController);
+app.post('/signup', userValidator.signUpValidator, signupController);
 
 app.use('/courses', coursesRoute);
 
