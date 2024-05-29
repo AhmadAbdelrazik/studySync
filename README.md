@@ -89,33 +89,38 @@ AJV is used to validate the input data for different endpoints, ensuring the dat
 
 ### Example Schema:
 ```json
-{
+const schema = {
   "type": "object",
   "properties": {
-    "question": { "type": "string" },
-    "options": { 
-      "type": "array",
-      "items": { "type": "string" }
+    "firstName": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 2,
     },
-    "answer": { "type": "string" }
+    "lastName": {
+      "type": "string",
+      "maxLength": 30,
+      "minLength": 2,
+    },
+    "email": {
+      "type": "string",
+      "maxLength": 100,
+      "pattern": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$",   
+    },
+    "password": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 50,
+    }
   },
-  "required": ["question", "options", "answer"]
-}
+  "required": ["firstName", "lastName", "email", "password"],
+  "additionalProperties": false,
+};
 ```
 
 ## Configuration
 
 Configuration is managed through environment variables. Ensure to set the necessary variables in your `.env` file.
-
-## Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/your-feature`).
-3. Commit your changes (`git commit -m 'Add some feature'`).
-4. Push to the branch (`git push origin feature/your-feature`).
-5. Create a new Pull Request.
 
 ## License
 
