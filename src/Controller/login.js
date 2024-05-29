@@ -16,8 +16,8 @@ module.exports = async function (req, res) {
   if (pwCheck)
     return res.status(httpStatus.NOT_FOUND).send('Wrong Email or Password');
 
-  const accessJWT = user.generateJWT;
-  const refreshJWT = user.generateRefreshJWT;
+  const accessJWT = await user.generateJWT();
+  const refreshJWT = await user.generateRefreshJWT();
 
   user.refreshToken = refreshJWT;
 
